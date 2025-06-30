@@ -5,13 +5,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { filter, take } from 'rxjs';
-import { Ticket } from '../models/ticket';
-import { Lookup } from '../models/lookup';
 import { MatSort } from '@angular/material/sort';
-import { UserRoles } from '../Enums/user-roles';
-import { UserRole } from '../models/user-role';
-import { ticketService } from '../Services/ticketService';
 import { TicketDialogComponent } from './ticket-dialog/ticket-dialog.component';
+import { Ticket } from 'src/app/models/ticket';
+import { UserRole } from 'src/app/models/user-role';
+import { Lookup } from 'src/app/models/lookup';
+import { ticketService } from 'src/app/Services/ticketService';
+import { UserRoles } from 'src/app/Enums/user-roles';
 
 @Component({
   selector: 'app-tickets',
@@ -44,19 +44,19 @@ export class TicketsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.msalBroadcastService.inProgress$
-      .pipe(
-        filter(
-          (status: InteractionStatus) => status === InteractionStatus.None
-        ),
-        take(1)
-      )
-      .subscribe(() => {
-        const accounts = this.msalService.instance.getAllAccounts();
-        if (accounts.length > 0) {
-          this.msalService.instance.setActiveAccount(accounts[0]);
-        }
-      });
+    // this.msalBroadcastService.inProgress$
+    //   .pipe(
+    //     filter(
+    //       (status: InteractionStatus) => status === InteractionStatus.None
+    //     ),
+    //     take(1)
+    //   )
+    //   .subscribe(() => {
+    //     const accounts = this.msalService.instance.getAllAccounts();
+    //     if (accounts.length > 0) {
+    //       this.msalService.instance.setActiveAccount(accounts[0]);
+    //     }
+    //   });
     this.ticketService.getAllTickets().subscribe((res) => {
       this.userRoleOjbect = res.userRole;
       this.displayedColumns = [
