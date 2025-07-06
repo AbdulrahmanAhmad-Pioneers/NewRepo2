@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlRaneem.Website.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250615114309_InitialCreate")]
+    [Migration("20250630131518_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -19,68 +19,6 @@ namespace AlRaneem.Website.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
-
-            modelBuilder.Entity("AlRaneem.Website.DataAccess.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("PhotoUrl")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ApplicationUser");
-                });
 
             modelBuilder.Entity("AlRaneem.Website.DataAccess.Models.Employee", b =>
                 {
@@ -153,8 +91,6 @@ namespace AlRaneem.Website.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
                     b.HasIndex("TicketId");
 
                     b.ToTable("Comments");
@@ -195,12 +131,6 @@ namespace AlRaneem.Website.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ApplicationUserId1")
-                        .HasColumnType("TEXT");
-
                     b.Property<int?>("AssignedToId")
                         .HasColumnType("INTEGER");
 
@@ -234,10 +164,6 @@ namespace AlRaneem.Website.DataAccess.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ApplicationUserId1");
 
                     b.HasIndex("AssignedToId");
 
@@ -283,19 +209,11 @@ namespace AlRaneem.Website.DataAccess.Migrations
 
             modelBuilder.Entity("AlRaneem.Website.DataAccess.Models.SupportSystemModels.Comment", b =>
                 {
-                    b.HasOne("AlRaneem.Website.DataAccess.Models.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AlRaneem.Website.DataAccess.Models.SupportSystemModels.Ticket", "Ticket")
                         .WithMany()
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("CreatedBy");
 
                     b.Navigation("Ticket");
                 });
@@ -312,14 +230,6 @@ namespace AlRaneem.Website.DataAccess.Migrations
 
             modelBuilder.Entity("AlRaneem.Website.DataAccess.Models.SupportSystemModels.Ticket", b =>
                 {
-                    b.HasOne("AlRaneem.Website.DataAccess.Models.ApplicationUser", null)
-                        .WithMany("AssignedTickets")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("AlRaneem.Website.DataAccess.Models.ApplicationUser", null)
-                        .WithMany("CreatedTickets")
-                        .HasForeignKey("ApplicationUserId1");
-
                     b.HasOne("AlRaneem.Website.DataAccess.Models.SupportSystemModels.UserRole", "AssignedTo")
                         .WithMany("AssignedToTickets")
                         .HasForeignKey("AssignedToId")
@@ -368,13 +278,6 @@ namespace AlRaneem.Website.DataAccess.Migrations
                     b.Navigation("Subcategory");
 
                     b.Navigation("SupportType");
-                });
-
-            modelBuilder.Entity("AlRaneem.Website.DataAccess.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("AssignedTickets");
-
-                    b.Navigation("CreatedTickets");
                 });
 
             modelBuilder.Entity("AlRaneem.Website.DataAccess.Models.SupportSystemModels.Lookup", b =>
